@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full bg-slate-900 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สื่อการเรียนรู้เรื่องไฟฟ้า (Interactive Electricity E-Learning)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                    },
+                    colors: {
+                        electric: {
+                            cyan: '#06b6d4',
+                            yellow: '#eab308',
+                            blue: '#3b82f6',
+                            glow: '#22d3ee',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glow-box {
+            box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.3);
+        }
+        .glow-yellow {
+            box-shadow: 0 0 25px -5px rgba(234, 179, 8, 0.4);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans bg-slate-950 text-slate-100 selection:bg-cyan-500 selection:text-slate-950">
+
+    <!-- Header / Navbar -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-amber-400 flex items-center justify-center text-slate-950 font-bold text-xl shadow-lg shadow-cyan-500/20">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold bg-gradient-to-r from-cyan-400 via-sky-300 to-amber-300 bg-clip-text text-transparent">
+                            ElectroLearn
+                        </h1>
+                        <p class="text-xs text-slate-400 hidden sm:block">สื่อการเรียนรู้วิทยาศาสตร์เรื่องไฟฟ้า</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <nav class="flex space-x-1 sm:space-x-2 bg-slate-800/60 p-1 rounded-xl border border-slate-700/50">
+                    <button onclick="switchTab('lessons')" id="btn-lessons" class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20 flex items-center gap-2">
+                        <i class="fa-solid fa-book-open"></i> <span class="hidden md:inline">บทเรียน</span>
+                    </button>
+                    <button onclick="switchTab('lab')" id="btn-lab" class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 text-slate-400 hover:text-slate-200 flex items-center gap-2">
+                        <i class="fa-solid fa-flask font-bold"></i> <span class="hidden md:inline">ห้องทดลองจำลอง</span>
+                    </button>
+                    <button onclick="switchTab('calculator')" id="btn-calculator" class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 text-slate-400 hover:text-slate-200 flex items-center gap-2">
+                        <i class="fa-solid fa-calculator"></i> <span class="hidden md:inline">การใช้ไฟ & คำนวณค่าไฟ</span>
+                    </button>
+                    <button onclick="switchTab('quiz')" id="btn-quiz" class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 text-slate-400 hover:text-slate-200 flex items-center gap-2">
+                        <i class="fa-solid fa-square-check"></i> <span class="hidden md:inline">แบบทดสอบ</span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- TAB 1: LESSONS -->
+        <section id="tab-lessons" class="tab-content space-y-8 animate-fadeIn">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 border border-slate-800 p-6 sm:p-10 glow-box">
+                <div class="absolute right-0 top-0 opacity-10 pointer-events-none transform translate-x-10 -translate-y-10">
+                    <i class="fa-solid fa-bolt text-[240px] text-cyan-400"></i>
+                </div>
+                <div class="max-w-2xl relative z-10 space-y-4">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                        <i class="fa-solid fa-sparkles text-xs"></i> ความรู้พื้นฐาน
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-bold tracking-tight text-white">
+                        ยินดีต้อนรับสู่โลกแห่งพลังงานไฟฟ้า! ⚡
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        ไฟฟ้าเป็นพลังงานรูปแบบหนึ่งที่สำคัญที่สุดในชีวิตประจำวัน เกิดจากการเคลื่อนที่ของอนุภาคประจุไฟฟ้า (อิเล็กตรอน) มาทำความเข้าใจตัวแปรสำคัญและหลักการทำงานกัน!
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-3">
+                        <button onclick="switchTab('lab')" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold px-5 py-2.5 rounded-xl transition flex items-center gap-2 text-sm">
+                            <i class="fa-solid fa-play"></i> เริ่มทดลองเลย
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Concepts Grid -->
+            <div>
+                <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-cubes text-cyan-400"></i> 3 ปริมาณทางไฟฟ้าที่สำคัญ
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Voltage -->
+                    <div class="bg-slate-900 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-6 transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-1">1. แรงดันไฟฟ้า (Voltage - V)</h4>
+                        <p class="text-xs text-cyan-400 font-mono mb-3">หน่วยวัด: โวลต์ (Volt: V)</p>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            คือแรงผลักดันทางไฟฟ้าที่ดันประจุไฟฟ้า (อิเล็กตรอน) ให้เคลื่อนที่ไปตามตัวนำ เปรียบเสมือน <b>"แรงดันน้ำ"</b> ในท่อ ยิ่งแรงดันสูง อิเล็กตรอนยิ่งถูกผลักดันแรง
+                        </p>
+                    </div>
+
+                    <!-- Current -->
+                    <div class="bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-2xl p-6 transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-wave-square"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-1">2. กระแสไฟฟ้า (Current - I)</h4>
+                        <p class="text-xs text-amber-400 font-mono mb-3">หน่วยวัด: แอมแปร์ (Ampere: A)</p>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            คืออัตราการไหลของประจุไฟฟ้าผ่านจุดหนึ่งๆ ในวงจรต่อหนึ่งหน่วยเวลา เปรียบเสมือน <b>"ปริมาณน้ำที่ไหล"</b> ผ่านท่อต่อวินาที
+                        </p>
+                    </div>
+
+                    <!-- Resistance -->
+                    <div class="bg-slate-900 border border-slate-800 hover:border-purple-500/50 rounded-2xl p-6 transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-ban"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-1">3. ความต้านทาน (Resistance - R)</h4>
+                        <p class="text-xs text-purple-400 font-mono mb-3">หน่วยวัด: โอห์ม (Ohm: Ω)</p>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            คือคุณสมบัติที่ขัดขวางการไหลของกระแสไฟฟ้า เปรียบเสมือน <b>"วาล์วหรี่น้ำ หรือ สิ่งกีดขวางในท่อ"</b> ยิ่งค่าความต้านทานสูง กระแสไฟจะไหลได้น้อยลง
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AC vs DC Comparison -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-arrows-left-right text-amber-400"></i> เปรียบเทียบ: ไฟฟ้ากระแสตรง (DC) VS ไฟฟ้ากระแสสลับ (AC)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-950 p-5 rounded-xl border border-blue-500/20">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="px-2.5 py-1 bg-blue-500/20 text-blue-400 font-bold text-xs rounded-md">DC</span>
+                            <h4 class="font-bold text-white">ไฟฟ้ากระแสตรง (Direct Current)</h4>
+                        </div>
+                        <ul class="text-sm text-slate-300 space-y-2 list-disc list-inside">
+                            <li>ทิศทางการไหลของกระแสแน่นอน ไหลไปทิศทางเดียวเสมอ (จากขั้วบวกไปขั้วลบ)</li>
+                            <li>ระดับแรงดันคงที่</li>
+                            <li><b>แหล่งกำเนิด:</b> แบตเตอรี่, ถ่านไฟฉาย, แผงโซลาร์เซลล์</li>
+                            <li><b>อุปกรณ์ใช้งาน:</b> สมาร์ทโฟน, โน้ตบุ๊ก, นาฬิกา, รถยนต์ไฟฟ้า</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-950 p-5 rounded-xl border border-amber-500/20">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="px-2.5 py-1 bg-amber-500/20 text-amber-400 font-bold text-xs rounded-md">AC</span>
+                            <h4 class="font-bold text-white">ไฟฟ้ากระแสสลับ (Alternating Current)</h4>
+                        </div>
+                        <ul class="text-sm text-slate-300 space-y-2 list-disc list-inside">
+                            <li>กระแสเปลี่ยนทิศทางการไหลกลับไปกลับมาอย่างต่อเนื่องตามความถี่ (ประเทศไทย 50 Hz)</li>
+                            <li>สามารถส่งผ่านสายไฟระยะไกลได้ดีและสูญเสียพลังงานต่ำ</li>
+                            <li><b>แหล่งกำเนิด:</b> เครื่องกำเนิดไฟฟ้า (Dynamo/Generator) ในโรงไฟฟ้า</li>
+                            <li><b>อุปกรณ์ใช้งาน:</b> ไฟฟ้าในบ้านเรือน, พัดลม, ตู้เย็น, แอร์</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: INTERACTIVE LAB -->
+        <section id="tab-lab" class="tab-content hidden space-y-8 animate-fadeIn">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-microchip text-cyan-400"></i> ห้องทดลองจำลองวงจรไฟฟ้า & กฎของโอห์ม
+                    </h2>
+                    <p class="text-slate-400 text-sm">ปรับเปลี่ยนแรงดันไฟฟ้า (V) และความต้านทาน (R) เพื่อสังเกตการเปลี่ยนแปลงของกระแสไฟฟ้า (I)</p>
+                </div>
+                <div class="flex items-center gap-2 bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs text-slate-300">
+                    <span>สูตรกฎของโอห์ม:</span>
+                    <span class="font-mono text-cyan-400 font-bold text-sm">V = I × R</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Controls Panel -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
+                    <h3 class="font-bold text-lg text-white border-b border-slate-800 pb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-cyan-400"></i> ตัวปรับค่าทางไฟฟ้า
+                    </h3>
+
+                    <!-- Switch Control -->
+                    <div class="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                        <span class="text-sm font-medium text-slate-200">สวิตช์วงจร (Switch)</span>
+                        <button id="circuit-switch-btn" onclick="toggleCircuitSwitch()" class="px-4 py-1.5 rounded-lg text-xs font-bold transition bg-emerald-500 text-slate-950 flex items-center gap-1.5 shadow-lg shadow-emerald-500/20">
+                            <i class="fa-solid fa-power-off"></i> <span id="switch-status-text">ปิดสวิตช์ (ON)</span>
+                        </button>
+                    </div>
+
+                    <!-- Voltage Slider -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <label class="text-slate-300 font-medium flex items-center gap-1.5">
+                                <i class="fa-solid fa-battery-full text-cyan-400"></i> แรงดันไฟฟ้า (V):
+                            </label>
+                            <span id="val-voltage" class="font-mono text-cyan-400 font-bold">12 V</span>
+                        </div>
+                        <input type="range" id="slider-voltage" min="1" max="36" value="12" class="w-full accent-cyan-400 bg-slate-800 h-2 rounded-lg cursor-pointer" oninput="updateLab()">
+                        <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+                            <span>1V</span>
+                            <span>18V</span>
+                            <span>36V</span>
+                        </div>
+                    </div>
+
+                    <!-- Resistance Slider -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <label class="text-slate-300 font-medium flex items-center gap-1.5">
+                                <i class="fa-solid fa-resistor text-purple-400"></i> ความต้านทาน (R):
+                            </label>
+                            <span id="val-resistance" class="font-mono text-purple-400 font-bold">6 Ω</span>
+                        </div>
+                        <input type="range" id="slider-resistance" min="1" max="50" value="6" class="w-full accent-purple-400 bg-slate-800 h-2 rounded-lg cursor-pointer" oninput="updateLab()">
+                        <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+                            <span>1 Ω</span>
+                            <span>25 Ω</span>
+                            <span>50 Ω</span>
+                        </div>
+                    </div>
+
+                    <!-- Computed Results Card -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+                        <div class="text-xs text-slate-400 font-semibold border-b border-slate-800 pb-2">ค่าที่คำนวณได้ในวงจร</div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-400">กระแสไฟฟ้า (I = V/R):</span>
+                            <span id="result-current" class="font-mono font-bold text-amber-400 text-base">2.00 A</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-400">กำลังไฟฟ้า (P = V×I):</span>
+                            <span id="result-power" class="font-mono font-bold text-emerald-400 text-base">24.00 W</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulation Canvas & Visual Display -->
+                <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                                <i class="fa-solid fa-display text-amber-400"></i> แบบจำลองวงจรและอิเล็กตรอน
+                            </h3>
+                            <span id="circuit-state-badge" class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-semibold rounded-full flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> วงจรปิด (ทำงาน)
+                            </span>
+                        </div>
+                        
+                        <!-- Canvas Container -->
+                        <div class="relative bg-slate-950 rounded-xl border border-slate-800 overflow-hidden flex items-center justify-center p-2 min-h-[300px]">
+                            <canvas id="circuitCanvas" width="600" height="300" class="w-full h-auto max-w-full rounded-lg"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Insight Box -->
+                    <div class="mt-4 p-4 bg-slate-950/80 rounded-xl border border-cyan-500/20 text-xs sm:text-sm text-slate-300 flex items-start gap-3">
+                        <i class="fa-solid fa-circle-info text-cyan-400 text-lg mt-0.5"></i>
+                        <div>
+                            <span class="font-semibold text-white">ข้อสังเกต:</span>
+                            <span id="lab-insight-text">
+                                เมื่อแรงดันไฟฟ้า (V) เพิ่มขึ้น ความเร็วการไหลของอิเล็กตรอนและกระแสไฟฟ้า (I) จะเพิ่มขึ้น ทำให้หลอดไฟสว่างมากขึ้น!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: HOME ELECTRICITY & CALCULATOR -->
+        <section id="tab-calculator" class="tab-content hidden space-y-8 animate-fadeIn">
+            <div>
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-house-bolt text-amber-400"></i> การใช้ไฟฟ้าในบ้าน & โปรแกรมคำนวณค่าไฟ
+                </h2>
+                <p class="text-slate-400 text-sm">คำนวณกำลังไฟฟ้า (วัตต์) และประมาณการค่าไฟฟ้าต่อเดือนในบ้านของคุณ</p>
+            </div>
+
+            <!-- Bill Calculator Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Appliance Selection Form -->
+                <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
+                    <h3 class="font-bold text-lg text-white border-b border-slate-800 pb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-plug text-cyan-400"></i> เลือกและระบุการใช้งานเครื่องใช้ไฟฟ้า
+                    </h3>
+
+                    <div id="appliances-list" class="space-y-4">
+                        <!-- Dynamic appliances loaded via JS -->
+                    </div>
+
+                    <button onclick="addCustomAppliance()" class="w-full py-2.5 border-2 border-dashed border-slate-700 hover:border-cyan-500/50 hover:bg-slate-800/50 text-slate-300 font-semibold rounded-xl transition text-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-plus text-cyan-400"></i> เพิ่มเครื่องใช้ไฟฟ้าอื่นๆ
+                    </button>
+                </div>
+
+                <!-- Summary & Rate Card -->
+                <div class="space-y-6">
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 glow-yellow space-y-6">
+                        <h3 class="font-bold text-lg text-white border-b border-slate-800 pb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-file-invoice-dollar text-amber-400"></i> สรุปการใช้พลังงาน & ค่าไฟ
+                        </h3>
+
+                        <div class="space-y-4">
+                            <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                                <span class="text-xs text-slate-400">พลังงานไฟฟ้ารวมต่อวัน</span>
+                                <div class="text-2xl font-bold font-mono text-cyan-400 mt-1">
+                                    <span id="total-kwh-day">0.00</span> <span class="text-xs font-normal text-slate-400">หน่วย (kWh)</span>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                                <span class="text-xs text-slate-400">พลังงานไฟฟ้ารวมต่อเดือน (30 วัน)</span>
+                                <div class="text-2xl font-bold font-mono text-amber-400 mt-1">
+                                    <span id="total-kwh-month">0.00</span> <span class="text-xs font-normal text-slate-400">หน่วย (kWh)</span>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-gradient-to-br from-amber-500/10 via-slate-950 to-slate-950 rounded-xl border border-amber-500/30">
+                                <span class="text-xs text-amber-300 font-semibold">ประมาณการค่าไฟฟ้าต่อเดือน</span>
+                                <div class="text-3xl font-extrabold font-mono text-amber-400 mt-1">
+                                    ฿<span id="total-cost-month">0.00</span>
+                                </div>
+                                <p class="text-[11px] text-slate-500 mt-1">*คำนวณตามอัตราเฉลี่ยประมาณ 4.2 บาท/หน่วย (รวม FT และ VAT 7%)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Safety Tips -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                        <h4 class="font-bold text-white mb-3 flex items-center gap-2 text-sm">
+                            <i class="fa-solid fa-shield-halved text-emerald-400"></i> ข้อควรระวังความปลอดภัย
+                        </h4>
+                        <ul class="text-xs text-slate-300 space-y-2 list-disc list-inside">
+                            <li>อย่าใช้ปลั๊กพ่วงต่อปลั๊กพ่วงซ้อนกันหลายชั้น</li>
+                            <li>ติดตั้งระบบ<b>สายดิน (Ground wire)</b> และเครื่องตัดไฟรั่ว (RCD)</li>
+                            <li>ห้ามสัมผัสอุปกรณ์ไฟฟ้าขณะมือหรือร่างกายเปียกน้ำ</li>
+                            <li>เลือกใช้เครื่องใช้ไฟฟ้าที่มีฉลากเบอร์ 5 เพื่อประหยัดพลังงาน</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: QUIZ -->
+        <section id="tab-quiz" class="tab-content hidden space-y-8 animate-fadeIn">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-graduation-cap text-cyan-400"></i> แบบทดสอบความรู้เรื่องไฟฟ้า
+                    </h2>
+                    <p class="text-slate-400 text-sm">ทดสอบความเข้าใจเกี่ยวกับทฤษฎี กฎของโอห์ม และความปลอดภัยทางไฟฟ้า</p>
+                </div>
+                <button onclick="resetQuiz()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-rotate-right"></i> เริ่มทำใหม่
+                </button>
+            </div>
+
+            <!-- Student Info Form (shown before quiz starts) -->
+            <div id="student-info-screen" class="max-w-lg mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-5 shadow-xl">
+                <div class="text-center space-y-1">
+                    <div class="w-14 h-14 rounded-full bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-2xl mx-auto mb-2">
+                        <i class="fa-solid fa-user-pen"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">กรอกข้อมูลก่อนทำแบบทดสอบ</h3>
+                    <p class="text-xs text-slate-400">ข้อมูลนี้จะถูกใช้บันทึกผลคะแนนของคุณ</p>
+                </div>
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-xs text-slate-400 mb-1 block">ชื่อ-นามสกุล</label>
+                        <input type="text" id="input-student-name" placeholder="เช่น ด.ช. สมชาย ใจดี" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-400">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-xs text-slate-400 mb-1 block">ชั้น</label>
+                            <input type="text" id="input-student-class" placeholder="เช่น ม.2/3" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-400">
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 mb-1 block">เลขที่</label>
+                            <input type="text" id="input-student-number" placeholder="เช่น 15" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-400">
+                        </div>
+                    </div>
+                </div>
+                <p id="student-info-error" class="hidden text-xs text-rose-400"></p>
+                <button onclick="startQuizWithInfo()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-6 py-3 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-lg shadow-cyan-500/20">
+                    เริ่มทำแบบทดสอบ <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div id="quiz-wrapper" class="hidden max-w-3xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl">
+                <!-- Quiz Progress Bar -->
+                <div>
+                    <div class="flex justify-between text-xs text-slate-400 mb-2">
+                        <span id="quiz-progress-text">ข้อที่ 1 จาก 5</span>
+                        <span id="quiz-score-badge" class="font-bold text-cyan-400">คะแนน: 0/5</span>
+                    </div>
+                    <div class="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden border border-slate-800">
+                        <div id="quiz-progress-bar" class="bg-gradient-to-r from-cyan-500 to-amber-400 h-full w-[20%] transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <!-- Question Box -->
+                <div id="quiz-container" class="space-y-6">
+                    <h3 id="quiz-question-text" class="text-lg sm:text-xl font-bold text-white">
+                        คำถามจะปรากฏตรงนี้...
+                    </h3>
+
+                    <div id="quiz-options-container" class="space-y-3">
+                        <!-- Options generated dynamically -->
+                    </div>
+
+                    <!-- Feedback message -->
+                    <div id="quiz-feedback" class="hidden p-4 rounded-xl text-sm font-medium"></div>
+
+                    <!-- Next Button -->
+                    <div class="flex justify-end pt-4">
+                        <button id="btn-next-quiz" onclick="nextQuestion()" class="hidden bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-6 py-2.5 rounded-xl transition flex items-center gap-2 text-sm shadow-lg shadow-cyan-500/20">
+                            ข้อถัดไป <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Result Screen (Hidden by default) -->
+                <div id="quiz-result-screen" class="hidden text-center py-8 space-y-6">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-400 to-cyan-500 flex items-center justify-center text-slate-950 font-extrabold text-3xl mx-auto shadow-lg shadow-amber-500/20">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white">ทดสอบเสร็จสิ้น!</h3>
+                        <p class="text-slate-400 text-sm mt-1">สรุปผลคะแนนความเข้าใจของคุณ</p>
+                    </div>
+                    <div class="text-4xl font-extrabold font-mono text-cyan-400">
+                        <span id="final-score">0</span> / <span id="max-score">5</span>
+                    </div>
+                    <p id="final-message" class="text-slate-300 text-sm max-w-md mx-auto">
+                        ...
+                    </p>
+                    <p id="submit-status" class="text-xs text-slate-500"></p>
+                    <div>
+                        <button onclick="resetQuiz()" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-8 py-3 rounded-xl transition text-sm shadow-lg shadow-cyan-500/20">
+                            <i class="fa-solid fa-rotate-right mr-1"></i> ทำแบบทดสอบอีกครั้ง
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-4 text-center text-xs text-slate-500">
+        <p>ElectroLearn © 2026 | สื่อการเรียนรู้วิทยาศาสตร์ฟิสิกส์เรื่องไฟฟ้าแบบปฏิสัมพันธ์ (Interactive Electricity Learning)</p>
+    </footer>
+
+    <script>
+        // =====================================================
+        // !!! ตั้งค่าตรงนี้ !!!
+        // นำ URL ของ Google Apps Script Web App ที่ deploy แล้วมาใส่แทนค่าด้านล่าง
+        // ดูวิธีตั้งค่าได้จากคำอธิบายที่แนบมาพร้อมไฟล์นี้
+        // =====================================================
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzh-k6ZlIfmJyTBqB7jrYxZJeG0KvroWtJrxa0n7RBSHJuCxE1mW1HwBFCFhzW6o60_Cw/exec";
+
+        let studentInfo = { name: '', className: '', number: '' };
+
+        // Tab switching logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-cyan-500', 'text-slate-950', 'shadow-md', 'shadow-cyan-500/20');
+                btn.classList.add('text-slate-400');
+            });
+
+            const activeTab = document.getElementById(`tab-${tabId}`);
+            if (activeTab) activeTab.classList.remove('hidden');
+
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-cyan-500', 'text-slate-950', 'shadow-md', 'shadow-cyan-500/20');
+                activeBtn.classList.remove('text-slate-400');
+            }
+
+            if (tabId === 'lab') {
+                // Resize and redraw canvas when entering lab tab
+                setTimeout(initLabCanvas, 50);
+            }
+        }
+
+        // ==========================================
+        // LAB & OHM'S LAW SIMULATION LOGIC
+        // ==========================================
+        let isSwitchOn = true;
+        let canvas, ctx;
+        let electrons = [];
+        let animFrameId = null;
+
+        function toggleCircuitSwitch() {
+            isSwitchOn = !isSwitchOn;
+            const btn = document.getElementById('circuit-switch-btn');
+            const statusText = document.getElementById('switch-status-text');
+            const badge = document.getElementById('circuit-state-badge');
+
+            if (isSwitchOn) {
+                btn.className = "px-4 py-1.5 rounded-lg text-xs font-bold transition bg-emerald-500 text-slate-950 flex items-center gap-1.5 shadow-lg shadow-emerald-500/20";
+                statusText.innerText = "วงจรปิด (ON)";
+                badge.className = "px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-semibold rounded-full flex items-center gap-1.5";
+                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> วงจรปิด (ทำงาน)`;
+            } else {
+                btn.className = "px-4 py-1.5 rounded-lg text-xs font-bold transition bg-rose-500 text-white flex items-center gap-1.5 shadow-lg shadow-rose-500/20";
+                statusText.innerText = "เปิดสวิตช์ (OFF)";
+                badge.className = "px-3 py-1 bg-rose-500/10 text-rose-400 border border-rose-500/30 text-xs font-semibold rounded-full";
+                badge.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> วงจรเปิด (กระแสไม่ไหล)`;
+            }
+            updateLab();
+        }
+
+        function initLabCanvas() {
+            canvas = document.getElementById('circuitCanvas');
+            if (!canvas) return;
+            ctx = canvas.getContext('2d');
+
+            // Initialize electron positions around rectangular circuit
+            if (electrons.length === 0) {
+                for (let i = 0; i < 30; i++) {
+                    electrons.push({ pos: i / 30 }); // position normalized 0 to 1
+                }
+            }
+
+            if (!animFrameId) {
+                animateCircuit();
+            }
+        }
+
+        function updateLab() {
+            const voltage = parseFloat(document.getElementById('slider-voltage').value);
+            const resistance = parseFloat(document.getElementById('slider-resistance').value);
+
+            document.getElementById('val-voltage').innerText = `${voltage} V`;
+            document.getElementById('val-resistance').innerText = `${resistance} Ω`;
+
+            const current = isSwitchOn ? (voltage / resistance) : 0;
+            const power = isSwitchOn ? (voltage * current) : 0;
+
+            document.getElementById('result-current').innerText = `${current.toFixed(2)} A`;
+            document.getElementById('result-power').innerText = `${power.toFixed(2)} W`;
+
+            // Insight description
+            const insight = document.getElementById('lab-insight-text');
+            if (!isSwitchOn) {
+                insight.innerText = "สวิตช์ถูกเปิดออก (Open Circuit) ทำให้ครบวงจรขาด อิเล็กตรอนไม่สามารถเคลื่อนที่ได้ และไม่มีกระแสไฟฟ้าไหล";
+            } else if (current > 5) {
+                insight.innerText = `กระแสไฟฟ้าไหลสูงมาก (${current.toFixed(2)} A)! อิเล็กตรอนเคลื่อนที่เร็วมากเนื่องจากความต้านทานต่ำ หรือแรงดันสูง`;
+            } else {
+                insight.innerText = `แรงดัน ${voltage}V ดันกระแส ${current.toFixed(2)}A ผ่านความต้านทาน ${resistance}Ω เป็นไปตามกฎของโอห์ม (I = V/R)`;
+            }
+        }
+
+        function animateCircuit() {
+            if (!ctx || !canvas) return;
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const padding = 50;
+            const rectW = width - padding * 2;
+            const rectH = height - padding * 2;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Fetch state values
+            const voltage = parseFloat(document.getElementById('slider-voltage').value);
+            const resistance = parseFloat(document.getElementById('slider-resistance').value);
+            const current = isSwitchOn ? (voltage / resistance) : 0;
+
+            // Draw Wires
+            ctx.strokeStyle = '#334155';
+            ctx.lineWidth = 6;
+            ctx.strokeRect(padding, padding, rectW, rectH);
+
+            // Draw Wire Glow when active
+            if (isSwitchOn && current > 0) {
+                ctx.strokeStyle = 'rgba(6, 182, 212, 0.4)';
+                ctx.lineWidth = 10;
+                ctx.strokeRect(padding, padding, rectW, rectH);
+            }
+
+            // Draw Battery (Left Side)
+            const batX = padding;
+            const batY = height / 2;
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(batX - 15, batY - 30, 30, 60);
+            ctx.strokeStyle = '#06b6d4';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(batX - 15, batY - 30, 30, 60);
+
+            // Battery Symbol (+/-)
+            ctx.fillStyle = '#22d3ee';
+            ctx.font = 'bold 16px Prompt';
+            ctx.fillText('+', batX - 5, batY - 35);
+            ctx.fillStyle = '#f43f5e';
+            ctx.fillText('-', batX - 4, batY + 48);
+
+            // Draw Light Bulb (Top Side)
+            const bulbX = width / 2;
+            const bulbY = padding;
+            const glowIntensity = isSwitchOn ? Math.min(1, current / 6) : 0;
+
+            if (glowIntensity > 0) {
+                const grad = ctx.createRadialGradient(bulbX, bulbY, 5, bulbX, bulbY, 40 * glowIntensity + 10);
+                grad.addColorStop(0, `rgba(250, 204, 21, ${glowIntensity})`);
+                grad.addColorStop(1, 'rgba(250, 204, 21, 0)');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(bulbX, bulbY, 40 * glowIntensity + 10, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Bulb Icon/Circle
+            ctx.fillStyle = glowIntensity > 0 ? '#facc15' : '#475569';
+            ctx.beginPath();
+            ctx.arc(bulbX, bulbY, 18, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.fillStyle = '#0f172a';
+            ctx.font = 'bold 12px FontAwesome';
+            ctx.fillText('💡', bulbX - 6, bulbY + 4);
+
+            // Draw Resistor Symbol (Right Side)
+            const resX = width - padding;
+            const resY = height / 2;
+            ctx.fillStyle = '#3b0764';
+            ctx.fillRect(resX - 12, resY - 25, 24, 50);
+            ctx.strokeStyle = '#c084fc';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(resX - 12, resY - 25, 24, 50);
+
+            ctx.fillStyle = '#e9d5ff';
+            ctx.font = '10px Prompt';
+            ctx.fillText(`${resistance}Ω`, resX + 18, resY + 4);
+
+            // Draw Switch (Bottom Side)
+            const swX = width / 2;
+            const swY = height - padding;
+
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(swX - 25, swY - 10, 50, 20);
+
+            if (isSwitchOn) {
+                ctx.strokeStyle = '#10b981';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(swX - 20, swY);
+                ctx.lineTo(swX + 20, swY);
+                ctx.stroke();
+            } else {
+                ctx.strokeStyle = '#f43f5e';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(swX - 20, swY);
+                ctx.lineTo(swX + 10, swY - 15);
+                ctx.stroke();
+            }
+
+            // Draw and Update Electrons
+            const speed = isSwitchOn ? (current * 0.002) : 0;
+            const perimeter = rectW * 2 + rectH * 2;
+
+            electrons.forEach(e => {
+                if (isSwitchOn) {
+                    e.pos = (e.pos + speed) % 1;
+                }
+
+                // Map 0..1 pos to perimeter coordinates
+                let distance = e.pos * perimeter;
+                let x = 0, y = 0;
+
+                if (distance < rectW) { // Top edge
+                    x = padding + distance;
+                    y = padding;
+                } else if (distance < rectW + rectH) { // Right edge
+                    x = padding + rectW;
+                    y = padding + (distance - rectW);
+                } else if (distance < rectW * 2 + rectH) { // Bottom edge
+                    x = padding + rectW - (distance - (rectW + rectH));
+                    y = padding + rectH;
+                } else { // Left edge
+                    x = padding;
+                    y = padding + rectH - (distance - (rectW * 2 + rectH));
+                }
+
+                // Draw Electron particle
+                ctx.fillStyle = '#22d3ee';
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (isSwitchOn) {
+                    ctx.shadowColor = '#06b6d4';
+                    ctx.shadowBlur = 6;
+                }
+            });
+            ctx.shadowBlur = 0; // reset glow
+
+            animFrameId = requestAnimationFrame(animateCircuit);
+        }
+
+        // ==========================================
+        // HOME ELECTRICITY CALCULATOR LOGIC
+        // ==========================================
+        const defaultAppliances = [
+            { id: 1, name: 'เครื่องปรับอากาศ (12,000 BTU)', watts: 1200, hours: 8, qty: 1, icon: 'fa-snowflake' },
+            { id: 2, name: 'พัดลมตั้งโต๊ะ', watts: 50, hours: 10, qty: 2, icon: 'fa-fan' },
+            { id: 3, name: 'ตู้เย็น (7 คิว)', watts: 150, hours: 24, qty: 1, icon: 'fa-box' },
+            { id: 4, name: 'หลอดไฟ LED', watts: 10, hours: 6, qty: 5, icon: 'fa-lightbulb' },
+            { id: 5, name: 'สมาร์ททีวี 55 นิ้ว', watts: 100, hours: 4, qty: 1, icon: 'fa-tv' }
+        ];
+
+        let appliances = [...defaultAppliances];
+
+        function renderAppliances() {
+            const listContainer = document.getElementById('appliances-list');
+            if (!listContainer) return;
+
+            listContainer.innerHTML = appliances.map(app => `
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400">
+                            <i class="fa-solid ${app.icon}"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">${app.name}</h4>
+                            <p class="text-xs text-slate-400 font-mono">${app.watts} วัตต์</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+                        <div class="flex items-center gap-2">
+                            <label class="text-xs text-slate-400">จำนวน:</label>
+                            <input type="number" min="1" max="20" value="${app.qty}" onchange="updateAppliance(${app.id}, 'qty', this.value)" class="w-14 bg-slate-900 border border-slate-800 rounded-lg px-2 py-1 text-xs text-center text-white focus:outline-none focus:border-cyan-400">
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <label class="text-xs text-slate-400">ชั่วโมง/วัน:</label>
+                            <input type="number" min="0.5" max="24" step="0.5" value="${app.hours}" onchange="updateAppliance(${app.id}, 'hours', this.value)" class="w-16 bg-slate-900 border border-slate-800 rounded-lg px-2 py-1 text-xs text-center text-white focus:outline-none focus:border-cyan-400">
+                        </div>
+
+                        <button onclick="removeAppliance(${app.id})" class="text-slate-500 hover:text-rose-400 transition text-sm p-1">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            calculateBill();
+        }
+
+        function updateAppliance(id, field, value) {
+            const app = appliances.find(a => a.id === id);
+            if (app) {
+                app[field] = parseFloat(value) || 0;
+                calculateBill();
+            }
+        }
+
+        function removeAppliance(id) {
+            appliances = appliances.filter(a => a.id !== id);
+            renderAppliances();
+        }
+
+        function addCustomAppliance() {
+            const name = prompt("ระบุชื่อเครื่องใช้ไฟฟ้า:", "หม้อหุงข้าว");
+            if (!name) return;
+            const watts = parseFloat(prompt("ระบุกำลังไฟฟ้า (วัตต์):", "600")) || 100;
+
+            appliances.push({
+                id: Date.now(),
+                name: name,
+                watts: watts,
+                hours: 2,
+                qty: 1,
+                icon: 'fa-plug'
+            });
+            renderAppliances();
+        }
+
+        function calculateBill() {
+            let totalWattsDay = 0;
+            appliances.forEach(app => {
+                totalWattsDay += (app.watts * app.qty * app.hours);
+            });
+
+            const kwhDay = totalWattsDay / 1000;
+            const kwhMonth = kwhDay * 30;
+            
+            // Average MEA/PEA rate roughly ~4.2 THB per unit
+            const ratePerUnit = 4.2;
+            const costMonth = kwhMonth * ratePerUnit;
+
+            document.getElementById('total-kwh-day').innerText = kwhDay.toFixed(2);
+            document.getElementById('total-kwh-month').innerText = kwhMonth.toFixed(2);
+            document.getElementById('total-cost-month').innerText = costMonth.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // ==========================================
+        // QUIZ LOGIC
+        // ==========================================
+        const quizData = [
+            {
+                question: "1. ตามกฎของโอห์ม (Ohm's Law) ความสัมพันธ์ในข้อใดถูกต้องที่สุด?",
+                options: [
+                    "V = I × R (แรงดัน = กระแส × ความต้านทาน)",
+                    "I = V × R (กระแส = แรงดัน × ความต้านทาน)",
+                    "R = I / V (ความต้านทาน = กระแส / แรงดัน)",
+                    "V = I / R (แรงดัน = กระแส / ความต้านทาน)"
+                ],
+                correct: 0,
+                explanation: "กฎของโอห์มระบุว่า V = I × R โดยแรงดันไฟฟ้า (V) มีค่าเท่ากับกระแสไฟฟ้า (I) คูณด้วยความต้านทาน (R)"
+            },
+            {
+                question: "2. แบตเตอรี่และแผงโซลาร์เซลล์ จ่ายไฟฟ้าในรูปแบบใด?",
+                options: [
+                    "ไฟฟ้ากระแสสลับ (AC)",
+                    "ไฟฟ้ากระแสตรง (DC)",
+                    "ไฟฟ้าสถิต (Static Electricity)",
+                    "ไฟฟ้าแรงสูง 220V"
+                ],
+                correct: 1,
+                explanation: "แบตเตอรี่และโซลาร์เซลล์ผลิตไฟฟ้ากระแสตรง (Direct Current: DC) ซึ่งไหลทิศทางเดียว"
+            },
+            {
+                question: "3. เครื่องใช้ไฟฟ้าชนิดหนึ่งขนาด 1,000 วัตต์ เปิดใช้งานเป็นเวลา 5 ชั่วโมง จะบริโภคพลังงานกี่ยูนิต (kWh)?",
+                options: [
+                    "0.5 ยูนิต",
+                    "2.5 ยูนิต",
+                    "5.0 ยูนิต",
+                    "500 ยูนิต"
+                ],
+                correct: 2,
+                explanation: "พลังงาน (kWh) = (วัตต์ × ชั่วโมง) / 1000 = (1000 × 5) / 1000 = 5 ยูนิต"
+            },
+            {
+                question: "4. อุปกรณ์ใดทำหน้าที่ป้องกันกระแสไฟฟ้าเกินหรือไฟฟ้าลัดวงจรโดยอัตโนมัติ?",
+                options: [
+                    "สวิตช์ไฟทั่วไป",
+                    "เบรกเกอร์ (Circuit Breaker)",
+                    "ตัวต้านทาน (Resistor)",
+                    "สายดิน (Ground wire)"
+                ],
+                correct: 1,
+                explanation: "เบรกเกอร์ทำหน้าที่ตัดวงจรไฟฟ้าทันทีเมื่อเกิดกระแสไฟเกินหรือไฟลัดวงจรเพื่อป้องกันเพลิงไหม้"
+            },
+            {
+                question: "5. หากต้องการให้หลอดไฟในวงจรมีความสว่างมากขึ้น ควรทำอย่างไร?",
+                options: [
+                    "เพิ่มความต้านทาน (R) ในวงจร",
+                    "ลดแรงดันไฟฟ้า (V) ลง",
+                    "เพิ่มแรงดันไฟฟ้า (V) หรือลดความต้านทาน (R)",
+                    "เปิดสวิตช์ให้ออก"
+                ],
+                correct: 2,
+                explanation: "การเพิ่มแรงดัน (V) หรือลดความต้านทาน (R) จะช่วยให้กระแสไฟฟ้า (I) ไหลเพิ่มขึ้น ทำให้กำลังไฟ (P=VI) สูงขึ้น หลอดไฟจึงสว่างขึ้น"
+            }
+        ];
+
+        let currentQuestionIdx = 0;
+        let score = 0;
+        let answered = false;
+
+        function startQuizWithInfo() {
+            const name = document.getElementById('input-student-name').value.trim();
+            const className = document.getElementById('input-student-class').value.trim();
+            const number = document.getElementById('input-student-number').value.trim();
+            const errorEl = document.getElementById('student-info-error');
+
+            if (!name || !className || !number) {
+                errorEl.innerText = "กรุณากรอกข้อมูลให้ครบทุกช่อง";
+                errorEl.classList.remove('hidden');
+                return;
+            }
+            errorEl.classList.add('hidden');
+
+            studentInfo = { name, className, number };
+
+            document.getElementById('student-info-screen').classList.add('hidden');
+            document.getElementById('quiz-wrapper').classList.remove('hidden');
+
+            resetQuiz();
+        }
+
+        function loadQuestion() {
+            answered = false;
+            const q = quizData[currentQuestionIdx];
+            document.getElementById('quiz-progress-text').innerText = `ข้อที่ ${currentQuestionIdx + 1} จาก ${quizData.length}`;
+            document.getElementById('quiz-progress-bar').style.width = `${((currentQuestionIdx + 1) / quizData.length) * 100}%`;
+            document.getElementById('quiz-question-text').innerText = q.question;
+
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-cyan-500/50 hover:bg-slate-800/50 text-slate-200 transition text-sm flex items-center justify-between group";
+                btn.innerHTML = `
+                    <span>${opt}</span>
+                    <i class="fa-regular fa-circle text-slate-600 group-hover:text-cyan-400"></i>
+                `;
+                btn.onclick = () => checkAnswer(idx, btn);
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById('quiz-feedback').className = "hidden p-4 rounded-xl text-sm font-medium";
+            document.getElementById('btn-next-quiz').classList.add('hidden');
+        }
+
+        function checkAnswer(selectedIdx, btnElement) {
+            if (answered) return;
+            answered = true;
+
+            const q = quizData[currentQuestionIdx];
+            const feedback = document.getElementById('quiz-feedback');
+            const options = document.getElementById('quiz-options-container').children;
+
+            if (selectedIdx === q.correct) {
+                score++;
+                document.getElementById('quiz-score-badge').innerText = `คะแนน: ${score}/${quizData.length}`;
+                btnElement.className = "w-full text-left p-4 rounded-xl bg-emerald-500/20 border-2 border-emerald-500 text-emerald-200 text-sm font-semibold flex items-center justify-between";
+                btnElement.querySelector('i').className = "fa-solid fa-circle-check text-emerald-400 text-lg";
+
+                feedback.className = "p-4 rounded-xl text-sm bg-emerald-500/10 border border-emerald-500/30 text-emerald-300";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i> <b>ถูกต้อง!</b> ${q.explanation}`;
+            } else {
+                btnElement.className = "w-full text-left p-4 rounded-xl bg-rose-500/20 border-2 border-rose-500 text-rose-200 text-sm flex items-center justify-between";
+                btnElement.querySelector('i').className = "fa-solid fa-circle-xmark text-rose-400 text-lg";
+
+                // Highlight correct option
+                options[q.correct].className = "w-full text-left p-4 rounded-xl bg-emerald-500/20 border border-emerald-500 text-emerald-200 text-sm font-semibold flex items-center justify-between";
+
+                feedback.className = "p-4 rounded-xl text-sm bg-rose-500/10 border border-rose-500/30 text-rose-300";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5"></i> <b>ยังไม่ถูกต้อง</b> ${q.explanation}`;
+            }
+
+            feedback.classList.remove('hidden');
+            document.getElementById('btn-next-quiz').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIdx++;
+            if (currentQuestionIdx < quizData.length) {
+                loadQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            const resultScreen = document.getElementById('quiz-result-screen');
+            resultScreen.classList.remove('hidden');
+
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('max-score').innerText = quizData.length;
+
+            const msg = document.getElementById('final-message');
+            if (score === quizData.length) {
+                msg.innerText = "ยอดเยี่ยมมาก! คุณมีความเข้าใจพื้นฐานทางไฟฟ้าและกฎของโอห์มอย่างทะลุปรุโปร่ง! ⚡🏆";
+            } else if (score >= 3) {
+                msg.innerText = "เก่งมาก! คุณมีความรู้ความเข้าใจไฟฟ้าในระดับดี สามารถทบทวนบทเรียนเพิ่มเติมเพื่อความแม่นยำยิ่งขึ้นได้";
+            } else {
+                msg.innerText = "ลองกลับไปทบทวนบทเรียนและห้องทดลองจำลองอีกรอบ แล้วกลับมาทำแบบทดสอบใหม่ได้ตลอดเวลาครับ!";
+            }
+
+            submitScoreToGoogleSheet();
+        }
+
+        // ==========================================
+        // SEND RESULT TO GOOGLE SHEETS (via Apps Script Web App)
+        // ==========================================
+        function submitScoreToGoogleSheet() {
+            const statusEl = document.getElementById('submit-status');
+
+            if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL.includes('YOUR_DEPLOYMENT_ID')) {
+                statusEl.innerText = "(ยังไม่ได้ตั้งค่าปลายทางบันทึกคะแนน)";
+                return;
+            }
+
+            statusEl.innerText = "กำลังบันทึกผลคะแนน...";
+
+            const payload = {
+                name: studentInfo.name,
+                className: studentInfo.className,
+                number: studentInfo.number,
+                score: score,
+                maxScore: quizData.length,
+                timestamp: new Date().toISOString()
+            };
+
+            // Apps Script Web Apps don't return CORS headers for a readable response
+            // when called this way, so we fire the request and don't try to read the
+            // response body back. The write still happens on the Sheet side.
+            fetch(GAS_WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                statusEl.innerText = "บันทึกผลคะแนนเรียบร้อยแล้ว ✓";
+            }).catch(() => {
+                statusEl.innerText = "ไม่สามารถบันทึกผลคะแนนได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต";
+            });
+        }
+
+        function resetQuiz() {
+            currentQuestionIdx = 0;
+            score = 0;
+            document.getElementById('quiz-score-badge').innerText = `คะแนน: 0/${quizData.length}`;
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('quiz-result-screen').classList.add('hidden');
+            document.getElementById('submit-status').innerText = '';
+            loadQuestion();
+        }
+
+        // ==========================================
+        // WINDOW ONLOAD INITIALIZATION
+        // ==========================================
+        window.onload = function() {
+            renderAppliances();
+            initLabCanvas();
+            updateLab();
+        };
+    </script>
+</body>
+</html>
